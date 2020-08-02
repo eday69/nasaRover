@@ -1,0 +1,91 @@
+﻿body {
+    background-color: transparent !important;
+}
+
+.homeImageBackground {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url(../images/2001.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+}
+
+.controlImageBackground {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url(../images/europa.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+}
+
+.wrapper-bottom-button {
+    text-align: center;
+}
+
+.bottom-button {
+    position: absolute;
+    top: 90%;
+}
+
+.gridcol {
+    padding: 0;
+    margin: 0;
+    border: 2px solid gray;
+    height: 50px;
+    width: 50px;
+    background-color: lightgray;
+    opacity: 0.6;
+}
+
+.gridHeaders {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    background-color: lightgray;
+    opacity: 0.6;
+}
+
+.rover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+}
+
+.colRed {
+    color: red;
+}
+
+.colBlue {
+    color: blue;
+}
+
+.colGreen {
+    color: green;
+}
+
+.colYellow {
+    color: yellow;
+}
+.colPurple {
+    color: purple;
+}
+.colBlack {
+    color: black;
+}
+.colGray {
+    color: gray;
+}

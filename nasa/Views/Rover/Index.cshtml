@@ -1,0 +1,113 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@functions {
+    public RoverMachine[] getRoversInXY(int x, int y)
+    {
+        RoverMachine[] _rover;
+
+        _rover = Model.Where(rov => (rov.XPos == x && rov.YPos == y)).ToArray();
+        return _rover;
+    }
+
+    public string getIcon(char heading)
+    {
+        string direction = "left";
+        if (heading == 'N') direction = "up";
+        if (heading == 'S') direction = "down";
+        if (heading == 'E') direction = "right";
+
+        return "fas fa-caret-" + direction;
+    }
+
+    string[] colors = new string[] {
+        "colRed",
+        "colBlue",
+        "colGreen",
+        "colYellow",
+        "colPurple",
+        "colBlack",
+        "colGray"
+    };
+
+    public string getColor(int idx)
+    {
+        return colors[idx];
+    }
+
+}
+@{
+    ViewData["Title"] = "Index";
+    //var rovers = ViewData["Rovers"] as RoverMachine[];
+}
+@model RoverMachine[]
+
+<div class="controlImageBackground">
+</div>
+
+<div class="grid-container">
+    <h1 class="display-4">Welcome Me</h1>
+    @foreach (var rover in Model)
+    {
+        <p>Moving: @rover.Heading</p>
+    }
+
+</div>
+
+<div class="d-flex justify-content-center align-items-center">
+    <table>
+        <tr>
+            <td class="gridcol">&nbsp;</td>
+            @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
+            {
+                <td class="gridcol">
+                    <div class="gridHeaders">@i</div>
+                </td>
+            }
+            <td class="gridcol">&nbsp;</td>
+        </tr>
+        @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
+        {
+            <tr>
+                <td class="gridcol">
+                    <div class="gridHeaders">
+                        @((int)ViewData["GridSize"] - i - 1)
+                    </div>
+                </td>
+                @for (int j = 0; j < (int)ViewData["GridSize"]; j++)
+                {
+                    <td class="gridcol">
+                        <div class="rover">
+                            @foreach (var roverdeployed in @getRoversInXY(j, 7 - i -1))
+                            {
+                                <i class="@getColor(roverdeployed.Id) @getIcon(@roverdeployed.Heading)"></i>
+                            }
+                        </div>
+                    </td>
+                }
+                <td class="gridcol">
+                    <div class="gridHeaders">
+                        @((int)ViewData["GridSize"] - i - 1)
+                    </div>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td class="gridcol">&nbsp;</td>
+            @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
+            {
+                <td class="gridcol">
+                    <div class="gridHeaders">@i</div>
+                </td>
+            }
+            <td class="gridcol">&nbsp;</td>
+        </tr>
+
+    </table>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2020 - Eric Day @getColor(2)
+    </div>
+</footer>
