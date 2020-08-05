@@ -2,6 +2,11 @@
     background-color: transparent !important;
 }
 
+.main-title {
+    font-size: 8rem;
+    color: red;
+}
+
 .homeImageBackground {
     position: fixed;
     top: -50%;
@@ -118,6 +123,18 @@
 }
 .colGray {
     color: gray;
+}
+.colSalmon {
+    color: #FA8072;
+}
+.colPink {
+    color: #FFC0CB;
+}
+.colGold {
+    color: #FFD700;
+}
+.colMagenta {
+    color: #FF00FF;
 }
 
 .roverId {
