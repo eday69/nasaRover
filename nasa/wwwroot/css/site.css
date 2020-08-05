@@ -16,6 +16,36 @@
     z-index: -1;
 }
 
+.landingImageBackground {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url(../images/landing.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.landingElements {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 10%;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
 .controlImageBackground {
     position: fixed;
     top: -50%;
@@ -88,4 +118,38 @@
 }
 .colGray {
     color: gray;
+}
+
+.roverId {
+    border: 1px solid white;
+}
+
+.control {
+    background-color: #757575;
+}
+
+.directions {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2.5rem;
+}
+
+.directions_caption {
+    font-size: 0.9rem;
+}
+
+.controlRover {
+    position: fixed;
+    top: 20%;
+    right: 0;
+    left: auto;
+    bottom: auto;
+}
+
+.newRover {
+    position: fixed;
+    top: 20%;
+    right: auto;
+    left: 0;
+    bottom: auto;
 }
