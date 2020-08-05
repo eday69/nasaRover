@@ -15,16 +15,23 @@ namespace nasa.Controllers
     {
         // GET: /<controller>/
         public IActionResult Index()
-        //public string Index()
         {
             int _grid = 0;
 
             _grid = getGridSize(_grid);
 
-            ViewData["GridSize"] = _grid;
-            RoverMachine[] deployedRovers = getRovers();
-            //ViewData["Rovers"] = getRovers();
-            return View(deployedRovers);
+            if (_grid == 0)
+            {
+                return View("Landing");
+            }
+            else
+            {
+                ViewData["GridSize"] = _grid;
+                RoverMachine[] deployedRovers = getRovers();
+                //ViewData["Rovers"] = getRovers();
+                return View("Index", deployedRovers);
+            }
+
         }
 
         private int getGridSize(int _grid)

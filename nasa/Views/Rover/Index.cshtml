@@ -37,8 +37,7 @@
 
 }
 @{
-    ViewData["Title"] = "Index";
-    //var rovers = ViewData["Rovers"] as RoverMachine[];
+    ViewData["Title"] = "RoverControl";
 }
 @model RoverMachine[]
 
@@ -46,68 +45,152 @@
 </div>
 
 <div class="grid-container">
-    <h1 class="display-4">Welcome Me</h1>
-    @foreach (var rover in Model)
-    {
-        <p>Moving: @rover.Heading</p>
-    }
-
+    <h1 class="title">Nasa Rover Control Center</h1>
+    <a class="btn btn-primary open-newRover" data-toggle="modal" href="#newRover">
+        DEPLOY ROVER
+    </a>
 </div>
 
-<div class="d-flex justify-content-center align-items-center">
-    <table>
-        <tr>
-            <td class="gridcol">&nbsp;</td>
-            @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
-            {
-                <td class="gridcol">
-                    <div class="gridHeaders">@i</div>
-                </td>
-            }
-            <td class="gridcol">&nbsp;</td>
-        </tr>
-        @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
-        {
+<div>
+    <div class="d-flex justify-content-center align-items-center">
+        <table>
             <tr>
-                <td class="gridcol">
-                    <div class="gridHeaders">
-                        @((int)ViewData["GridSize"] - i - 1)
-                    </div>
-                </td>
-                @for (int j = 0; j < (int)ViewData["GridSize"]; j++)
+                <td class="gridcol">&nbsp;</td>
+                @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
                 {
                     <td class="gridcol">
-                        <div class="rover">
-                            @foreach (var roverdeployed in @getRoversInXY(j, 7 - i -1))
-                            {
-                                <i class="@getColor(roverdeployed.Id) @getIcon(@roverdeployed.Heading)"></i>
-                            }
-                        </div>
+                        <div class="gridHeaders">@i</div>
                     </td>
                 }
-                <td class="gridcol">
-                    <div class="gridHeaders">
-                        @((int)ViewData["GridSize"] - i - 1)
-                    </div>
-                </td>
+                <td class="gridcol">&nbsp;</td>
             </tr>
-        }
-        <tr>
-            <td class="gridcol">&nbsp;</td>
             @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
             {
-                <td class="gridcol">
-                    <div class="gridHeaders">@i</div>
-                </td>
+                <tr>
+                    <td class="gridcol">
+                        <div class="gridHeaders">
+                            @((int)ViewData["GridSize"] - i - 1)
+                        </div>
+                    </td>
+                    @for (int j = 0; j < (int)ViewData["GridSize"]; j++)
+                    {
+                        <td class="gridcol">
+                            <div class="rover">
+                                @foreach (var roverdeployed in @getRoversInXY(j, (int)ViewData["GridSize"] - i - 1))
+                                {
+                                    <a class="open-controlRover"
+                                       data-toggle="modal"
+                                       data-id="@roverdeployed.Id"
+                                       data-xpos="@roverdeployed.XPos"
+                                       data-ypos="@roverdeployed.YPos"
+                                       data-heading="@roverdeployed.Heading"
+                                       href="#controlRover">
+                                        <i class="@getColor(roverdeployed.Id) @getIcon(@roverdeployed.Heading)"></i>
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    }
+                    <td class="gridcol">
+                        <div class="gridHeaders">
+                            @((int)ViewData["GridSize"] - i - 1)
+                        </div>
+                    </td>
+                </tr>
             }
-            <td class="gridcol">&nbsp;</td>
-        </tr>
+            <tr>
+                <td class="gridcol">&nbsp;</td>
+                @for (int i = 0; i < (int)ViewData["GridSize"]; i++)
+                {
+                    <td class="gridcol">
+                        <div class="gridHeaders">@i</div>
+                    </td>
+                }
+                <td class="gridcol">&nbsp;</td>
+            </tr>
 
-    </table>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-danger bottom-button" onclick="location.href='@Url.Action("", "Rover")'">REFRESH</button>
+    </div>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2020 - Eric Day @getColor(2)
+<div class="modal fade" id="controlRover" tabindex="-1" role="dialog" aria-labelledby="roverModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm controlRover" role="document">
+        <div class="modal-content">
+            <div class="modal-body control">
+                <div class="border border-white rounded-top">
+                    <p class="h3 pl-1">ROVER</p>
+                    <p class="text-center">ID # <span id="roverId"></span></p>
+                </div>
+                <div class="border border-white">
+                    <p class="h4 pl-1">POSITION</p>
+                    <p class="text-center">x : <span id="roverXpos"></span></p>
+                    <p class="text-center">y : <span id="roverYpos"></span></p>
+                    <p class="text-center"><span id="roverHeading"></span></p>
+                </div>
+                <div class="border border-white rounded-bottom">
+                    <p class="h4 pl-1">MOVE</p>
+                    <div class="directions">
+                        <a class="addMovement" data-direction="L" href="#controlRover" onclick="">
+                            <i class="far fa-arrow-alt-circle-left"></i>
+                        </a>
+                        <a class="addMovement" data-direction="M" href="#controlRover" onclick="">
+                            <i class="far fa-arrow-alt-circle-up"></i>
+                        </a>
+                        <a class="addMovement" data-direction="R" href="#controlRover" onclick="">
+                            <i class="far fa-arrow-alt-circle-right"></i>
+                        </a>
+                    </div>
+                    <div class="directions">
+                        <p class="directions_caption">Left</p>
+                        <p class="directions_caption">Move</p>
+                        <p class="directions_caption">Right</p>
+                    </div>
+                    <div class="text-center mt-2">
+                        <input id="roverMovements" disabled value="" />
+                    </div>
+                    <div class="text-center mt-2 mb-2">
+                        <button type="button" class="btn btn-success" id="sendMovements">
+                            SEND
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</footer>
+</div>
+
+
+<div class="modal fade" id="newRover" tabindex="-1" role="dialog" aria-labelledby="newRoverModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm newRover" role="document">
+        <div class="modal-content">
+            <div class="modal-body control">
+                <div class="border border-white rounded-top">
+                    <p class="h3 pl-1">LAUNCH ROVER</p>
+                </div>
+                <div class="border border-white">
+                    <p class="h4 pl-1">DESTINATION</p>
+                    <p class="text-center">x : <input type="number" id="newRoverX" min="0" max="99"></p>
+                    <p class="text-center">y : <input type="number" id="newRoverY" min="0" max="99"></p>
+                    <p class="text-center">Heading:
+                        <select id="newRoverHeading">
+                            <option value="N">North</option>
+                            <option value="S">South</option>
+                            <option value="E">East</option>
+                            <option value="W">West</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="border border-white rounded-bottom">
+                    <div class="text-center mt-2 mb-2">
+                        <button type="button" class="btn btn-success" id="launchRover">
+                            DEPLOY
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
