@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using nasa.Models;
-using System.Net.Http;
 using Newtonsoft.Json;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace nasa.Controllers
 {
@@ -28,10 +23,9 @@ namespace nasa.Controllers
             {
                 ViewData["GridSize"] = _grid;
                 RoverMachine[] deployedRovers = getRovers();
-                //ViewData["Rovers"] = getRovers();
+
                 return View("Index", deployedRovers);
             }
-
         }
 
         private int getGridSize(int _grid)
@@ -39,7 +33,6 @@ namespace nasa.Controllers
             using (var client = new System.Net.Http.HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:5002/api/");
-                //HTTP GET
                 var responseTask = client.GetAsync("grid");
                 responseTask.Wait();
 
@@ -51,10 +44,8 @@ namespace nasa.Controllers
 
                     _grid = Int32.Parse(readTask.Result);
                 }
-                else //web api sent error response 
+                else
                 {
-                    //log response status here..
-
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }
@@ -70,7 +61,6 @@ namespace nasa.Controllers
             {
 
                 client.BaseAddress = new Uri("http://localhost:5002/api/");
-                //HTTP GET
                 var responseTask = client.GetAsync("rovers");
                 responseTask.Wait();
 
@@ -84,10 +74,8 @@ namespace nasa.Controllers
 
                     _rovers = JsonConvert.DeserializeObject<RoverMachine[]>(json);
                 }
-                else //web api sent error response 
+                else 
                 {
-                    //log response status here..
-
                     ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
                 }
             }

@@ -8,14 +8,4 @@
         public char Heading { get; set; }
 
     }   
-
-    public class RoverMovements
-    {
-        public string move { get; set; }
-    }
-
-    public class Grid
-    {
-        public int MaxSize { get; set; }
-    }
 }
